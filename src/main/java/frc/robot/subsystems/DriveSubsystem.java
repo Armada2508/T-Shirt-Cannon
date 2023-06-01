@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -25,6 +24,7 @@ public class DriveSubsystem extends SubsystemBase {
         talons.add(talonFL);
         talons.add(talonBR);
         talons.add(talonBL);
+        talonFR.setInverted(true);
         configMotors();
     }
 
@@ -32,7 +32,6 @@ public class DriveSubsystem extends SubsystemBase {
         stop();
         for (TalonSRX talon : talons) {
             talon.configFactoryDefault();
-            talon.setNeutralMode(NeutralMode.Brake);
         }
     }
 
@@ -51,12 +50,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void setVelocity(double velocityL, double velocityR) {}
 
-    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return null;
-    }
-
-    public Pose2d getPose() {
-        return null;
-    }
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {return null;}
+    
+    public Pose2d getPose() {return null;}
 
 }

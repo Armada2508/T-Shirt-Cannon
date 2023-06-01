@@ -9,9 +9,15 @@ public final class Constants {
         public static final int talonFLID = 4;
 
         public static final double speedAdjustment = 1;
-        public static final double turnAdjustment = 1;
+        public static final double turnAdjustment = 0.65;
 
         public static final double joystickDeadband = 0.07;
+    }
+
+    public static final class Pneumatics {
+        public static final int compressorLID = 1;
+        public static final int compressorRID = 2;
+        public static final int solenoidID = 0;
     }
 
 }
