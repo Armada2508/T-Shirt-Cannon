@@ -18,6 +18,8 @@ public final class Constants {
         public static final int compressorLID = 1;
         public static final int compressorRID = 2;
         public static final int solenoidID = 0;
+        public static final int maxAmps = 18;
+        public static final double maxCurrentTimeSeconds = 0.5;
     }
 
 }
