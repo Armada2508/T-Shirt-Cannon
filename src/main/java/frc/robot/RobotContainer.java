@@ -23,10 +23,10 @@ public class RobotContainer {
 	
 	private void configureBindings() {
 		new JoystickButton(joystick, 1).onTrue(
-			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::fireCannon)
+			pneumaticsSubsystem.fireCannon()
 		);
 		new JoystickButton(joystick, 2).onTrue(
-			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::closeCannon)
+			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::closeSolenoid)
 		);
 		new JoystickButton(joystick, 3).onTrue(
 			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::disableCompressors)

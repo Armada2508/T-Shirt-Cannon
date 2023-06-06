@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Pneumatics;
 import frc.robot.lib.pneumatics.CurrentLimitedCompressor;
@@ -14,7 +17,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
 
     public PneumaticsSubsystem() {
         disableCompressors();
-        closeCannon();
+        closeSolenoid();
     }
 
     @Override
@@ -33,12 +36,21 @@ public class PneumaticsSubsystem extends SubsystemBase {
         compressorR.disable();
     }
 
-    public void fireCannon() {
+    public void openSolenoid() {
         solenoid.set(true);
     }
 
-    public void closeCannon() {
+    public void closeSolenoid() {
         solenoid.set(false);
+    }
+
+    public Command fireCannon() {
+        return new SequentialCommandGroup(
+            runOnce(this::disableCompressors),
+            runOnce(this::openSolenoid),
+            Commands.waitSeconds(0.75),
+            runOnce(this::closeSolenoid)
+        );
     }
 
 }
