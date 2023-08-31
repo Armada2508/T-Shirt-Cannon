@@ -24,6 +24,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
     public void periodic() {
         compressorL.check(0.05);
         compressorR.check(0.05);
+        lightFlash();
     }
 
     public void enableCompressors() {
@@ -51,6 +52,13 @@ public class PneumaticsSubsystem extends SubsystemBase {
             Commands.waitSeconds(0.75),
             runOnce(this::closeSolenoid)
         );
+    }
+
+    public void lightFlash() { //channel 0 important
+        boolean pressureSwitch = compressorL.getPressureSwitchValue();
+        if (pressureSwitch == true) {
+            //light flash
+        }
     }
 
 }
