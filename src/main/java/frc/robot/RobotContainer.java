@@ -4,36 +4,32 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
+import frc.robot.lib.controller.SmartJoystick;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LinearActuatorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 
 public class RobotContainer {
 
-	private Joystick joystick = new Joystick(0);
-	private DriveSubsystem driveSubsystem = new DriveSubsystem();
-	private PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
+	private final SmartJoystick joystick = new SmartJoystick(0);
+	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	private final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
+	private final LinearActuatorSubsystem actuatorSubsystem = new LinearActuatorSubsystem();
 	
 	public RobotContainer() {
 		configureBindings();
 		driveSubsystem.setDefaultCommand(new DriveCommand(() -> -joystick.getRawAxis(1), () -> -joystick.getRawAxis(0), driveSubsystem));
 	}
 	
+
 	private void configureBindings() {
-		new JoystickButton(joystick, 1).onTrue(
-			pneumaticsSubsystem.fireCannon()
-		);
-		new JoystickButton(joystick, 2).onTrue(
-			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::closeSolenoid)
-		);
-		new JoystickButton(joystick, 3).onTrue(
-			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::disableCompressors)
-		);
-		new JoystickButton(joystick, 5).onTrue(
-			pneumaticsSubsystem.runOnce(pneumaticsSubsystem::enableCompressors)
-		);
+		joystick.onTrue(1, pneumaticsSubsystem.fireCannon());
+		joystick.onTrue(2, pneumaticsSubsystem.runOnce(pneumaticsSubsystem::closeSolenoid));
+		joystick.onTrue(3, pneumaticsSubsystem.runOnce(pneumaticsSubsystem::disableCompressors));
+		joystick.onTrue(5, pneumaticsSubsystem.runOnce(pneumaticsSubsystem::enableCompressors));
+		joystick.whileTrue(11, actuatorSubsystem.lowerCannon());
+		joystick.whileTrue(12, actuatorSubsystem.raiseCannon());
 	}
 	
 }
