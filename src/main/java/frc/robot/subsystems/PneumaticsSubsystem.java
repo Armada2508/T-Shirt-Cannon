@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -14,6 +17,9 @@ public class PneumaticsSubsystem extends SubsystemBase {
     private CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(Pneumatics.compressorLID, PneumaticsModuleType.CTREPCM, Pneumatics.maxAmps, Pneumatics.maxCurrentTimeSeconds);
     private CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(Pneumatics.compressorRID, PneumaticsModuleType.CTREPCM, Pneumatics.maxAmps, Pneumatics.maxCurrentTimeSeconds);
     private Solenoid solenoid = new Solenoid(Pneumatics.compressorLID, PneumaticsModuleType.CTREPCM, Pneumatics.solenoidID);
+    private Relay light = new Relay(0, Direction.kForward);
+    private int time = 0;
+
 
     public PneumaticsSubsystem() {
         disableCompressors();
@@ -24,7 +30,10 @@ public class PneumaticsSubsystem extends SubsystemBase {
     public void periodic() {
         compressorL.check(0.05);
         compressorR.check(0.05);
-        lightFlash();
+        time = (time + 20) % 1000;
+        if (time == 0) {
+            lightFlash();
+        } 
     }
 
     public void enableCompressors() {
@@ -54,11 +63,15 @@ public class PneumaticsSubsystem extends SubsystemBase {
         );
     }
 
-    public void lightFlash() { //channel 0 important
+    public void lightFlash() {
         boolean pressureSwitch = compressorL.getPressureSwitchValue();
-        if (pressureSwitch == true) {
-            //light flash
+        if (pressureSwitch) {
+            if (light.get() == Value.kOn) {
+                light.set(Value.kOff);
+            }
+            else {
+                light.set(Value.kOn);
+            }
         }
     }
-
 }
