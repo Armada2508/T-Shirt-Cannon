@@ -32,8 +32,11 @@ public class PneumaticsSubsystem extends SubsystemBase {
         compressorR.check(0.05);
         time = (time + 20) % 1000;
         if (time == 0) {
-            lightFlash();
+            flashLight();
         } 
+        if (!compressorL.getPressureSwitchValue()) {
+            light.set(Value.kOff);
+        }
     }
 
     public void enableCompressors() {
@@ -63,7 +66,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
         );
     }
 
-    public void lightFlash() {
+    public void flashLight() {
         boolean pressureSwitch = compressorL.getPressureSwitchValue();
         if (pressureSwitch) {
             if (light.get() == Value.kOn) {
@@ -72,6 +75,6 @@ public class PneumaticsSubsystem extends SubsystemBase {
             else {
                 light.set(Value.kOn);
             }
-        }
+        } 
     }
 }
