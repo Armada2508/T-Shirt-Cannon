@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class LinearActuatorSubsystem extends SubsystemBase {
     
-	private final Relay linearActuator = new Relay(1);
+	private final Relay linearActuator = new Relay(Constants.linearActuatorRelayID);
 
     public LinearActuatorSubsystem() {
         stopActuator();
