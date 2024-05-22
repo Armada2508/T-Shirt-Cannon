@@ -10,20 +10,18 @@ import frc.robot.Constants.DriveK;
 
 public class Drive extends SubsystemBase {
     
-    private TalonSRX talonFR = new TalonSRX(DriveK.talonFRID);
-    private TalonSRX talonFL = new TalonSRX(DriveK.talonFLID);    
-    private TalonSRX talonBR = new TalonSRX(DriveK.talonBRID);    
-    private TalonSRX talonBL = new TalonSRX(DriveK.talonBLID);  
-    private Set<TalonSRX> talons = Set.of(talonFR, talonFL, talonBR, talonBL);
+    private final TalonSRX talonFR = new TalonSRX(DriveK.talonFRID);
+    private final TalonSRX talonFL = new TalonSRX(DriveK.talonFLID);    
+    private final TalonSRX talonBR = new TalonSRX(DriveK.talonBRID);    
+    private final TalonSRX talonBL = new TalonSRX(DriveK.talonBLID);  
+    private final Set<TalonSRX> talons = Set.of(talonFR, talonFL, talonBR, talonBL);
     
     public Drive() {
         configMotors();
     }
 
     private void configMotors() {
-        for (var talon : talons) {
-            talon.configFactoryDefault();
-        }
+        talons.forEach((talon) -> talon.configFactoryDefault());
         talonFR.setInverted(true);
     }
 

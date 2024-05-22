@@ -7,6 +7,7 @@ package frc.robot;
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 import static edu.wpi.first.wpilibj2.command.Commands.sequence;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotInit() { //* Will eventually be changed to just the constructor once WPILib does that
+		DriverStation.silenceJoystickConnectionWarning(true);
 		addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
 		addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod);
 		drive.setDefaultCommand(DriveCommands.drive(joystick::getYInverted, joystick::getZInverted, drive));
@@ -42,7 +44,8 @@ public class Robot extends TimedRobot {
 		joystick.b12().whileTrue(linearActuator.raiseCannon());
 		RobotModeTriggers.disabled().onTrue(sequence(
 			runOnce(() -> CommandScheduler.getInstance().cancelAll()),
-			runOnce(drive::stop)
+			runOnce(drive::stop),
+			runOnce(linearActuator::stop)
 		));
 	}
 	

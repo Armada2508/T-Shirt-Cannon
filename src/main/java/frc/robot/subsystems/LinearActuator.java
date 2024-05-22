@@ -10,19 +10,15 @@ public class LinearActuator extends SubsystemBase {
     
 	private final Relay linearActuator = new Relay(Constants.linearActuatorRelayID);
 
-    public LinearActuator() {
-        stopActuator();
-    }
-
     public Command raiseCannon() {
-        return startEnd(() -> linearActuator.set(Value.kForward), this::stopActuator);
+        return startEnd(() -> linearActuator.set(Value.kForward), this::stop);
     }
 
     public Command lowerCannon() {
-        return startEnd(() -> linearActuator.set(Value.kReverse), this::stopActuator);
+        return startEnd(() -> linearActuator.set(Value.kReverse), this::stop);
     }
 
-    public void stopActuator() {
+    public void stop() {
         linearActuator.set(Value.kOff);
     }
 
