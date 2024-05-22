@@ -18,6 +18,7 @@ public final class Constants {
         public static final double turnAdjustment = 0.65;
 
         public static final double joystickDeadband = 0.07;
+        public static final double deadbandSmoothing = 4;
     }
 
     public static final class PneumaticsK {

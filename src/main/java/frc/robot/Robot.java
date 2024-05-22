@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Constants.JoysticksK;
 import frc.robot.Constants.PneumaticsK;
-import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommands;
 import frc.robot.lib.controller.Logitech3DPro;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.LinearActuator;
@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() { //* Will eventually be changed to just the constructor once WPILib does that
 		addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
 		addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod);
-		drive.setDefaultCommand(new DriveCommand(joystick::getYInverted, joystick::getZInverted, drive));
+		drive.setDefaultCommand(DriveCommands.drive(joystick::getYInverted, joystick::getZInverted, drive));
 		configureBindings();
 	}
 	
