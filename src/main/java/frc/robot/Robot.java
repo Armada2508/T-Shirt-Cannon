@@ -6,26 +6,26 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.Joysticks;
-import frc.robot.Constants.Pneumatics;
+import frc.robot.Constants.JoysticksK;
+import frc.robot.Constants.PneumaticsK;
 import frc.robot.commands.DriveCommand;
 import frc.robot.lib.controller.Logitech3DPro;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.LinearActuatorSubsystem;
-import frc.robot.subsystems.PneumaticsSubsystem;
+import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.LinearActuator;
+import frc.robot.subsystems.Pneumatics;
 
 public class Robot extends TimedRobot {
 
-	private final Logitech3DPro joystick = new Logitech3DPro(Joysticks.joystickPort);
-	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	private final PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
-	private final LinearActuatorSubsystem actuatorSubsystem = new LinearActuatorSubsystem();
+	private final Logitech3DPro joystick = new Logitech3DPro(JoysticksK.joystickPort);
+	private final Drive driveSubsystem = new Drive();
+	private final Pneumatics pneumaticsSubsystem = new Pneumatics();
+	private final LinearActuator actuatorSubsystem = new LinearActuator();
 	
 	@Override
 	public void robotInit() {
 		var scheduler = CommandScheduler.getInstance();
 		addPeriodic(scheduler::run, kDefaultPeriod);
-		addPeriodic(pneumaticsSubsystem::flashLight, Pneumatics.lightFlashPeriod);
+		addPeriodic(pneumaticsSubsystem::flashLight, PneumaticsK.lightFlashPeriod);
 		driveSubsystem.setDefaultCommand(new DriveCommand(joystick::getYInverted, joystick::getZInverted, driveSubsystem));
 		configureBindings();
 	}

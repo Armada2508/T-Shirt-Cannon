@@ -3,16 +3,16 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.Drive;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Constants.DriveK;
+import frc.robot.subsystems.Drive;
 
 public class DriveCommand extends Command {
 
     private DoubleSupplier joystickSpeed;
     private DoubleSupplier joystickTurn;
-    private DriveSubsystem driveSubsystem;
+    private Drive driveSubsystem;
 
-    public DriveCommand(DoubleSupplier joystickSpeed, DoubleSupplier joystickTurn, DriveSubsystem driveSubsystem) {
+    public DriveCommand(DoubleSupplier joystickSpeed, DoubleSupplier joystickTurn, Drive driveSubsystem) {
         this.joystickSpeed = joystickSpeed;
         this.joystickTurn = joystickTurn;
         this.driveSubsystem = driveSubsystem;
@@ -28,14 +28,14 @@ public class DriveCommand extends Command {
         speed = processDeadband(speed);
         turn = processDeadband(turn); 
         // Speed Adjusting
-        speed *= Drive.speedAdjustment;
-        turn *= Drive.turnAdjustment;
+        speed *= DriveK.speedAdjustment;
+        turn *= DriveK.turnAdjustment;
         
         double powerFactor = findSpeed((speed - turn), (speed + turn));
 
         double leftSpeed = (speed - turn) * powerFactor;
         double rightSpeed = (speed + turn) * powerFactor;
-        driveSubsystem.setPower(leftSpeed, rightSpeed);
+        driveSubsystem.setPercentOutput(leftSpeed, rightSpeed);
     }
 
     /**
@@ -43,12 +43,12 @@ public class DriveCommand extends Command {
      */
     private double processDeadband(double val) {
         double newVal = val;
-        if (Math.abs(val) < Drive.joystickDeadband) {
+        if (Math.abs(val) < DriveK.joystickDeadband) {
             newVal = 0;
         }
         else {
             // Point slope form Y = M(X-X0)+Y0.
-            newVal = /*M*/ (1 / (1 - Drive.joystickDeadband)) * /*X-X0*/(val + (-Math.signum(val) * Drive.joystickDeadband));
+            newVal = /*M*/ (1 / (1 - DriveK.joystickDeadband)) * /*X-X0*/(val + (-Math.signum(val) * DriveK.joystickDeadband));
         }
         return newVal;
     }

@@ -9,18 +9,18 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.Pneumatics;
+import frc.robot.Constants.PneumaticsK;
 import frc.robot.Robot;
 import frc.robot.lib.pneumatics.CurrentLimitedCompressor;
 
-public class PneumaticsSubsystem extends SubsystemBase {
+public class Pneumatics extends SubsystemBase {
 
-    private CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(Pneumatics.compressorLID, PneumaticsModuleType.CTREPCM, Pneumatics.maxAmps, Pneumatics.maxCurrentTimeSeconds);
-    private CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(Pneumatics.compressorRID, PneumaticsModuleType.CTREPCM, Pneumatics.maxAmps, Pneumatics.maxCurrentTimeSeconds);
-    private Solenoid solenoid = new Solenoid(Pneumatics.compressorLID, PneumaticsModuleType.CTREPCM, Pneumatics.solenoidID);
-    private Relay light = new Relay(Pneumatics.lightRelayID, Direction.kForward);
+    private CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxAmps, PneumaticsK.maxCurrentTimeSeconds);
+    private CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxAmps, PneumaticsK.maxCurrentTimeSeconds);
+    private Solenoid solenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
+    private Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
-    public PneumaticsSubsystem() {
+    public Pneumatics() {
         disableCompressors();
         closeSolenoid();
     }
@@ -56,7 +56,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
         return Commands.sequence(
             runOnce(this::disableCompressors),
             runOnce(this::openSolenoid),
-            Commands.waitSeconds(Pneumatics.timeToFire),
+            Commands.waitSeconds(PneumaticsK.timeToFire),
             runOnce(this::closeSolenoid)
         );
     }

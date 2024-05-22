@@ -2,11 +2,13 @@ package frc.robot;
 
 public final class Constants {
 
-    public static final class Joysticks {
+    public static final int linearActuatorRelayID = 0;
+
+    public static final class JoysticksK {
         public static final int joystickPort = 0;
     }
 
-    public static final class Drive {
+    public static final class DriveK {
         public static final int talonFRID = 1;
         public static final int talonBRID = 2;
         public static final int talonBLID = 3;
@@ -18,7 +20,7 @@ public final class Constants {
         public static final double joystickDeadband = 0.07;
     }
 
-    public static final class Pneumatics {
+    public static final class PneumaticsK {
         public static final int compressorLID = 1;
         public static final int compressorRID = 2;
         public static final int solenoidID = 0;
@@ -28,7 +30,5 @@ public final class Constants {
         public static final double timeToFire = 0.75;
         public static final double lightFlashPeriod = 1;
     }
-
-    public static final int linearActuatorRelayID = 0;
 
 }
