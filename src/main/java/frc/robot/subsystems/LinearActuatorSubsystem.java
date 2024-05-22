@@ -15,11 +15,11 @@ public class LinearActuatorSubsystem extends SubsystemBase {
     }
 
     public Command raiseCannon() {
-        return this.startEnd(() -> linearActuator.set(Value.kForward), this::stopActuator);
+        return startEnd(() -> linearActuator.set(Value.kForward), this::stopActuator);
     }
 
     public Command lowerCannon() {
-        return this.startEnd(() -> linearActuator.set(Value.kReverse), this::stopActuator);
+        return startEnd(() -> linearActuator.set(Value.kReverse), this::stopActuator);
     }
 
     public void stopActuator() {

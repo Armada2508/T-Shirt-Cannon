@@ -2,6 +2,10 @@ package frc.robot;
 
 public final class Constants {
 
+    public static final class Joysticks {
+        public static final int joystickPort = 0;
+    }
+
     public static final class Drive {
         public static final int talonFRID = 1;
         public static final int talonBRID = 2;
@@ -21,6 +25,8 @@ public final class Constants {
         public static final int lightRelayID = 1;
         public static final int maxAmps = 18;
         public static final double maxCurrentTimeSeconds = 0.5;
+        public static final double timeToFire = 0.75;
+        public static final double lightFlashPeriod = 1;
     }
 
     public static final int linearActuatorRelayID = 0;

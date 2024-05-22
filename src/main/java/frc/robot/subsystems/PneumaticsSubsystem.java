@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
@@ -7,9 +8,9 @@ import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Pneumatics;
+import frc.robot.Robot;
 import frc.robot.lib.pneumatics.CurrentLimitedCompressor;
 
 public class PneumaticsSubsystem extends SubsystemBase {
@@ -18,8 +19,6 @@ public class PneumaticsSubsystem extends SubsystemBase {
     private CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(Pneumatics.compressorRID, PneumaticsModuleType.CTREPCM, Pneumatics.maxAmps, Pneumatics.maxCurrentTimeSeconds);
     private Solenoid solenoid = new Solenoid(Pneumatics.compressorLID, PneumaticsModuleType.CTREPCM, Pneumatics.solenoidID);
     private Relay light = new Relay(Pneumatics.lightRelayID, Direction.kForward);
-    private int time = 0;
-
 
     public PneumaticsSubsystem() {
         disableCompressors();
@@ -28,12 +27,8 @@ public class PneumaticsSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        compressorL.check(0.05);
-        compressorR.check(0.05);
-        time = (time + 20) % 1000;
-        if (time == 0) {
-            flashLight();
-        } 
+        compressorL.check(Robot.kDefaultPeriod);
+        compressorR.check(Robot.kDefaultPeriod);
         if (!compressorL.getPressureSwitchValue()) {
             light.set(Value.kOff);
         }
@@ -58,17 +53,16 @@ public class PneumaticsSubsystem extends SubsystemBase {
     }
 
     public Command fireCannon() {
-        return new SequentialCommandGroup(
+        return Commands.sequence(
             runOnce(this::disableCompressors),
             runOnce(this::openSolenoid),
-            Commands.waitSeconds(0.75),
+            Commands.waitSeconds(Pneumatics.timeToFire),
             runOnce(this::closeSolenoid)
         );
     }
 
     public void flashLight() {
-        boolean pressureSwitch = compressorL.getPressureSwitchValue();
-        if (pressureSwitch) {
+        if (compressorL.getPressureSwitchValue()) {
             if (light.get() == Value.kOn) {
                 light.set(Value.kOff);
             }
@@ -77,4 +71,5 @@ public class PneumaticsSubsystem extends SubsystemBase {
             }
         } 
     }
+
 }
