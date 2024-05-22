@@ -21,8 +21,7 @@ public class Pneumatics extends SubsystemBase {
     private Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
     public Pneumatics() {
-        disableCompressors();
-        closeSolenoid();
+        solenoid.set(false);
     }
 
     @Override
@@ -34,30 +33,34 @@ public class Pneumatics extends SubsystemBase {
         }
     }
 
-    public void enableCompressors() {
-        compressorL.enableDigital();
-        compressorR.enableDigital();
+    public Command enableCompressors() {
+        return Commands.runOnce(() -> { // Don't want to require anything
+            compressorL.enableDigital();
+            compressorR.enableDigital();
+        });
     }
 
-    public void disableCompressors() {
-        compressorL.disable();
-        compressorR.disable();
+    public Command disableCompressors() {
+        return Commands.runOnce(() -> { // Don't want to require anything
+            compressorL.disable();
+            compressorR.disable();
+        });
     }
 
-    public void openSolenoid() {
-        solenoid.set(true);
+    public Command openSolenoid() {
+        return runOnce(() -> solenoid.set(true));
     }
 
-    public void closeSolenoid() {
-        solenoid.set(false);
+    public Command closeSolenoid() {
+        return runOnce(() -> solenoid.set(false));
     }
 
     public Command fireCannon() {
         return Commands.sequence(
-            runOnce(this::disableCompressors),
-            runOnce(this::openSolenoid),
+            disableCompressors(),
+            openSolenoid(),
             Commands.waitSeconds(PneumaticsK.timeToFire),
-            runOnce(this::closeSolenoid)
+            closeSolenoid()
         );
     }
 
