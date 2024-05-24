@@ -1,5 +1,13 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Seconds;
+
+import edu.wpi.first.units.Current;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Time;
+
+
 public final class Constants {
 
     public static final int linearActuatorRelayID = 0;
@@ -26,10 +34,10 @@ public final class Constants {
         public static final int compressorRID = 2;
         public static final int solenoidID = 0;
         public static final int lightRelayID = 1;
-        public static final int maxAmps = 18;
-        public static final double maxCurrentTimeSeconds = 0.5;
-        public static final double timeToFire = 0.75;
-        public static final double lightFlashPeriod = 1;
+        public static final Measure<Current> maxCurrent = Amps.of(18);
+        public static final Measure<Time> currentTripTime = Seconds.of(0.5);
+        public static final Measure<Time> timeToFire = Seconds.of(0.75);
+        public static final Measure<Time> lightFlashPeriod = Seconds.of(1);
     }
 
 }

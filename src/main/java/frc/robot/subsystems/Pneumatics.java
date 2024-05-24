@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
@@ -14,10 +17,10 @@ import frc.robot.lib.pneumatics.CurrentLimitedCompressor;
 
 public class Pneumatics extends SubsystemBase {
 
-    private CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxAmps, PneumaticsK.maxCurrentTimeSeconds);
-    private CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxAmps, PneumaticsK.maxCurrentTimeSeconds);
-    private Solenoid solenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
-    private Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
+    private final CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
+    private final CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
+    private final Solenoid solenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
+    private final Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
     public Pneumatics() {
         solenoid.set(false);
@@ -58,7 +61,7 @@ public class Pneumatics extends SubsystemBase {
         return Commands.sequence(
             disableCompressors(),
             openSolenoid(),
-            Commands.waitSeconds(PneumaticsK.timeToFire),
+            waitSeconds(PneumaticsK.timeToFire.in(Seconds)), //* Don't need to call .in once 2025
             closeSolenoid()
         );
     }
@@ -71,7 +74,7 @@ public class Pneumatics extends SubsystemBase {
             else {
                 light.set(Value.kOn);
             }
-        } 
+        }
     }
 
 }

@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LinearActuator extends SubsystemBase {
-    
-	private final Relay linearActuator = new Relay(Constants.linearActuatorRelayID);
+
+    private final Relay linearActuator = new Relay(Constants.linearActuatorRelayID);
 
     public Command raiseCannon() {
         return startEnd(() -> linearActuator.set(Value.kForward), this::stop);

@@ -20,7 +20,7 @@ public class DriveCommands {
 
             speed *= DriveK.speedAdjustment;
             turn *= DriveK.turnAdjustment;
-            
+
             var speeds = DriveUtil.normalizeValues(speed - turn, speed + turn);
             double leftSpeed = speeds.getFirst();
             double rightSpeed = speeds.getSecond();

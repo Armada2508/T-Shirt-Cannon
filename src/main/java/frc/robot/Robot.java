@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 import static edu.wpi.first.wpilibj2.command.Commands.sequence;
 
@@ -21,32 +22,32 @@ import frc.robot.subsystems.Pneumatics;
 
 public class Robot extends TimedRobot {
 
-	private final Logitech3DPro joystick = new Logitech3DPro(JoysticksK.joystickPort);
-	private final Drive drive = new Drive();
-	private final Pneumatics pneumatics = new Pneumatics();
-	private final LinearActuator linearActuator = new LinearActuator();
-	
-	@Override
-	public void robotInit() { //* Will eventually be changed to just the constructor once WPILib does that
-		DriverStation.silenceJoystickConnectionWarning(true);
-		addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
-		addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod);
-		drive.setDefaultCommand(DriveCommands.drive(joystick::getYInverted, joystick::getZInverted, drive));
-		configureBindings();
-	}
-	
-	private void configureBindings() {
-		joystick.b1().onTrue(pneumatics.fireCannon());
-		joystick.b2().onTrue(pneumatics.closeSolenoid());
-		joystick.b3().onTrue(pneumatics.disableCompressors());
-		joystick.b5().onTrue(pneumatics.enableCompressors());
-		joystick.b11().whileTrue(linearActuator.lowerCannon());
-		joystick.b12().whileTrue(linearActuator.raiseCannon());
-		RobotModeTriggers.disabled().onTrue(sequence(
-			runOnce(() -> CommandScheduler.getInstance().cancelAll()),
-			runOnce(drive::stop),
-			runOnce(linearActuator::stop)
-		));
-	}
-	
+    private final Logitech3DPro joystick = new Logitech3DPro(JoysticksK.joystickPort);
+    private final Drive drive = new Drive();
+    private final Pneumatics pneumatics = new Pneumatics();
+    private final LinearActuator linearActuator = new LinearActuator();
+
+    @Override
+    public void robotInit() { //* Will eventually be changed to just the constructor once WPILib does that
+        DriverStation.silenceJoystickConnectionWarning(true);
+        addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
+        addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod.in(Seconds)); //* Don't need to call .in once 2025
+        drive.setDefaultCommand(DriveCommands.drive(joystick::getYInverted, joystick::getZInverted, drive));
+        configureBindings();
+    }
+
+    private void configureBindings() {
+        joystick.b1().onTrue(pneumatics.fireCannon());
+        joystick.b2().onTrue(pneumatics.closeSolenoid());
+        joystick.b3().onTrue(pneumatics.disableCompressors());
+        joystick.b5().onTrue(pneumatics.enableCompressors());
+        joystick.b11().whileTrue(linearActuator.lowerCannon());
+        joystick.b12().whileTrue(linearActuator.raiseCannon());
+        RobotModeTriggers.disabled().onTrue(sequence(
+            runOnce(() -> CommandScheduler.getInstance().cancelAll()),
+            runOnce(drive::stop),
+            runOnce(linearActuator::stop)
+        ));
+    }
+
 }

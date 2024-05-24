@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveK;
 
 public class Drive extends SubsystemBase {
-    
+
     private final TalonSRX talonFR = new TalonSRX(DriveK.talonFRID);
-    private final TalonSRX talonFL = new TalonSRX(DriveK.talonFLID);    
-    private final TalonSRX talonBR = new TalonSRX(DriveK.talonBRID);    
-    private final TalonSRX talonBL = new TalonSRX(DriveK.talonBLID);  
+    private final TalonSRX talonFL = new TalonSRX(DriveK.talonFLID);
+    private final TalonSRX talonBR = new TalonSRX(DriveK.talonBRID);
+    private final TalonSRX talonBL = new TalonSRX(DriveK.talonBLID);
     private final Set<TalonSRX> talons = Set.of(talonFR, talonFL, talonBR, talonBL);
-    
+
     public Drive() {
         configMotors();
     }
