@@ -5,7 +5,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.DriveK;
-import frc.robot.lib.drive.DriveUtil;
+import frc.robot.lib.util.DriveUtil;
 import frc.robot.subsystems.Drive;
 
 public class DriveCommands {

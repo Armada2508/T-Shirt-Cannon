@@ -27,8 +27,7 @@ public class Robot extends TimedRobot {
     private final Pneumatics pneumatics = new Pneumatics();
     private final LinearActuator linearActuator = new LinearActuator();
 
-    @Override
-    public void robotInit() { //* Will eventually be changed to just the constructor once WPILib does that
+    public Robot() {
         DriverStation.silenceJoystickConnectionWarning(true);
         addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
         addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod.in(Seconds)); //* Don't need to call .in once 2025
