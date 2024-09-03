@@ -19,7 +19,7 @@ public class Pneumatics extends SubsystemBase {
 
     private final CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
     private final CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
-    private final Solenoid solenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
+    private final Solenoid solenoid = new Solenoid(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
     private final Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
     public Pneumatics() {

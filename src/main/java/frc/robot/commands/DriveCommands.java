@@ -15,8 +15,11 @@ public class DriveCommands {
             double speed = joystickSpeed.getAsDouble();
             double turn = joystickTurn.getAsDouble();
 
-            speed = DriveUtil.processDeadband(speed, DriveK.joystickDeadband, DriveK.deadbandSmoothing);
-            turn =  DriveUtil.processDeadband(speed, DriveK.joystickDeadband, DriveK.deadbandSmoothing);
+            // speed = DriveUtil.processDeadband(speed, DriveK.joystickDeadband, DriveK.deadbandSmoothing);
+            // turn =  DriveUtil.processDeadband(speed, DriveK.joystickDeadband, DriveK.deadbandSmoothing);
+            if (Math.abs(turn) < DriveK.joystickDeadband) {
+                turn = 0;
+            }
 
             speed *= DriveK.speedAdjustment;
             turn *= DriveK.turnAdjustment;
@@ -24,7 +27,6 @@ public class DriveCommands {
             var speeds = DriveUtil.normalizeValues(speed - turn, speed + turn);
             double leftSpeed = speeds.getFirst();
             double rightSpeed = speeds.getSecond();
-
             drive.setPercentOutput(leftSpeed, rightSpeed);
         }, drive).finallyDo(drive::stop);
     }
