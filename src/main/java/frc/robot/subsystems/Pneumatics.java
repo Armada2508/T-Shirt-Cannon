@@ -19,11 +19,13 @@ public class Pneumatics extends SubsystemBase {
 
     private final CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
     private final CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
-    private final Solenoid solenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.solenoidID);
+    private final Solenoid firingSolenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.firingSolenoidID);
+    private final Solenoid tankSolenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.tankSolenoidID);
     private final Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
     public Pneumatics() {
-        solenoid.set(false);
+        firingSolenoid.set(false);
+        tankSolenoid.set(true);
     }
 
     @Override
@@ -49,20 +51,26 @@ public class Pneumatics extends SubsystemBase {
         });
     }
 
-    public Command openSolenoid() {
-        return runOnce(() -> solenoid.set(true));
+    public Command openFiringSolenoid() {
+        return runOnce(() -> {
+            firingSolenoid.set(true);
+            tankSolenoid.set(false);
+        });
     }
 
-    public Command closeSolenoid() {
-        return runOnce(() -> solenoid.set(false));
+    public Command closeFiringSolenoid() {
+        return runOnce(() -> {
+            firingSolenoid.set(false);
+            tankSolenoid.set(true);
+        });
     }
 
     public Command fireCannon() {
         return Commands.sequence(
             disableCompressors(),
-            openSolenoid(),
+            openFiringSolenoid(),
             waitSeconds(PneumaticsK.timeToFire.in(Seconds)), //* Don't need to call .in once 2025
-            closeSolenoid()
+            closeFiringSolenoid()
         );
     }
 

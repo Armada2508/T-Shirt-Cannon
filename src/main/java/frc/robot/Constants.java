@@ -14,6 +14,7 @@ public final class Constants {
 
     public static final class JoysticksK {
         public static final int joystickPort = 0;
+        public static final int controllerPort = 1;
     }
 
     public static final class DriveK {
@@ -32,7 +33,8 @@ public final class Constants {
     public static final class PneumaticsK {
         public static final int compressorLID = 0;
         public static final int compressorRID = 1;
-        public static final int solenoidID = 0;
+        public static final int firingSolenoidID = 0;
+        public static final int tankSolenoidID = 1;
         public static final int lightRelayID = 1;
         public static final Measure<Current> maxCurrent = Amps.of(18);
         public static final Measure<Time> currentTripTime = Seconds.of(0.5);
