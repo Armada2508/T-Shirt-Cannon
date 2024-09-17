@@ -34,7 +34,7 @@ public final class Constants {
         public static final int compressorLID = 0;
         public static final int compressorRID = 1;
         public static final int firingSolenoidID = 0;
-        public static final int tankSolenoidID = 1;
+        public static final int tankSolenoidID = 0;
         public static final int lightRelayID = 1;
         public static final Measure<Current> maxCurrent = Amps.of(18);
         public static final Measure<Time> currentTripTime = Seconds.of(0.5);

@@ -55,8 +55,8 @@ public class Robot extends TimedRobot {
         controller.x().onTrue(pneumatics.closeFiringSolenoid());
         controller.povLeft().onTrue(pneumatics.disableCompressors());
         controller.povRight().onTrue(pneumatics.enableCompressors());
-        controller.povDown().onTrue(linearActuator.lowerCannon());
-        controller.povUp().onTrue(linearActuator.raiseCannon());
+        controller.povDown().whileTrue(linearActuator.lowerCannon());
+        controller.povUp().whileTrue(linearActuator.raiseCannon());
 
         RobotModeTriggers.disabled().onTrue(sequence(
             runOnce(() -> CommandScheduler.getInstance().cancelAll()),

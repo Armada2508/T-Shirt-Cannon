@@ -20,12 +20,12 @@ public class Pneumatics extends SubsystemBase {
     private final CurrentLimitedCompressor compressorL = new CurrentLimitedCompressor(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
     private final CurrentLimitedCompressor compressorR = new CurrentLimitedCompressor(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.maxCurrent, PneumaticsK.currentTripTime);
     private final Solenoid firingSolenoid = new Solenoid(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.firingSolenoidID);
-    private final Solenoid tankSolenoid = new Solenoid(PneumaticsK.compressorRID, PneumaticsModuleType.CTREPCM, PneumaticsK.tankSolenoidID);
+    private final Solenoid tankSolenoid = new Solenoid(PneumaticsK.compressorLID, PneumaticsModuleType.CTREPCM, PneumaticsK.tankSolenoidID);
     private final Relay light = new Relay(PneumaticsK.lightRelayID, Direction.kForward);
 
     public Pneumatics() {
         firingSolenoid.set(false);
-        tankSolenoid.set(true);
+        tankSolenoid.set(false);
     }
 
     @Override
@@ -54,14 +54,14 @@ public class Pneumatics extends SubsystemBase {
     public Command openFiringSolenoid() {
         return runOnce(() -> {
             firingSolenoid.set(true);
-            tankSolenoid.set(false);
+            tankSolenoid.set(true);
         });
     }
 
     public Command closeFiringSolenoid() {
         return runOnce(() -> {
             firingSolenoid.set(false);
-            tankSolenoid.set(true);
+            tankSolenoid.set(false);
         });
     }
 
