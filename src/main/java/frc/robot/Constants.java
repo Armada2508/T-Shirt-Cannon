@@ -23,7 +23,7 @@ public final class Constants {
         public static final int talonBLID = 3;
         public static final int talonFLID = 4;
 
-        public static final double speedAdjustment = 1;
+        public static final double speedAdjustment = 0.75;
         public static final double turnAdjustment = 0.65;
 
         public static final double joystickDeadband = 0.07;
@@ -38,7 +38,7 @@ public final class Constants {
         public static final int lightRelayID = 1;
         public static final Measure<Current> maxCurrent = Amps.of(18);
         public static final Measure<Time> currentTripTime = Seconds.of(0.5);
-        public static final Measure<Time> timeToFire = Seconds.of(0.75);
+        public static final Measure<Time> timeToFire = Seconds.of(0.5);
         public static final Measure<Time> lightFlashPeriod = Seconds.of(1);
     }
 

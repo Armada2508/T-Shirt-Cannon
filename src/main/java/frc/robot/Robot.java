@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
     private final LinearActuator linearActuator = new LinearActuator();
 
     public Robot() {
-        DoubleSupplier driveSpeed = () -> joystick.isConnected() ? joystick.getYInverted() : controller.getLeftY();
-        DoubleSupplier turnSpeed = () -> joystick.isConnected() ? joystick.getZInverted() : controller.getLeftX();
+        DoubleSupplier driveSpeed = () -> joystick.isConnected() ? joystick.getYInverted() : -controller.getLeftY();
+        DoubleSupplier turnSpeed = () -> joystick.isConnected() ? joystick.getZInverted() : -controller.getLeftX();
         DriverStation.silenceJoystickConnectionWarning(true);
         addPeriodic(() -> CommandScheduler.getInstance().run(), kDefaultPeriod);
         addPeriodic(pneumatics::flashLight, PneumaticsK.lightFlashPeriod.in(Seconds)); //* Don't need to call .in once 2025

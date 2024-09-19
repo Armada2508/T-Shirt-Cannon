@@ -67,7 +67,6 @@ public class Pneumatics extends SubsystemBase {
 
     public Command fireCannon() {
         return Commands.sequence(
-            disableCompressors(),
             openFiringSolenoid(),
             waitSeconds(PneumaticsK.timeToFire.in(Seconds)), //* Don't need to call .in once 2025
             closeFiringSolenoid()
