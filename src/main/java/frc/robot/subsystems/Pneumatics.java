@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsK;
@@ -70,7 +71,7 @@ public class Pneumatics extends SubsystemBase {
             openFiringSolenoid(),
             waitSeconds(PneumaticsK.timeToFire.in(Seconds)), //* Don't need to call .in once 2025
             closeFiringSolenoid()
-        );
+        ).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public void flashLight() {

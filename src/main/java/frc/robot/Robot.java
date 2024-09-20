@@ -45,14 +45,12 @@ public class Robot extends TimedRobot {
     private void configureBindings() {
         // Joystick
         joystick.b1().onTrue(pneumatics.fireCannon());
-        joystick.b2().onTrue(pneumatics.closeFiringSolenoid());
         joystick.b3().onTrue(pneumatics.disableCompressors());
         joystick.b5().onTrue(pneumatics.enableCompressors());
         joystick.b11().whileTrue(linearActuator.lowerCannon());
         joystick.b12().whileTrue(linearActuator.raiseCannon());
         // Controller
-        controller.rightTrigger().onTrue(pneumatics.fireCannon());
-        controller.x().onTrue(pneumatics.closeFiringSolenoid());
+        controller.leftTrigger().and(controller.rightTrigger()).onTrue(pneumatics.fireCannon());
         controller.povLeft().onTrue(pneumatics.disableCompressors());
         controller.povRight().onTrue(pneumatics.enableCompressors());
         controller.povDown().whileTrue(linearActuator.lowerCannon());
